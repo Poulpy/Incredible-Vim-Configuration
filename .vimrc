@@ -56,6 +56,7 @@ set lazyredraw " for macros, better performance
 match OverLength /\%80v.*/
 " Source a global configuration file if available
 :nnoremap <F8> :setl noai nocin nosi inde=<CR>
+:nnoremap <C-X> viw
 
 set tabstop=4 " length of tab press
 set softtabstop=4 " length of tab suppr
