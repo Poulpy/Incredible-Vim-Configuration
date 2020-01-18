@@ -12,14 +12,47 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'airblade/vim-gitgutter' " gutter for git
-Plug 'ollykel/v-vim' " V color syntax
-Plug 'vim-airline/vim-airline' " AWESOME status bar
-Plug 'ctrlpvim/ctrlp.vim' " file finder
+" Plug 'airblade/vim-gitgutter' " gutter for git
+" Plug 'ollykel/v-vim' " V color syntax
+" Plug 'ctrlpvim/ctrlp.vim' " file finder
 
 call plug#end()
 
+:autocmd BufEnter * let g:gitbranch=system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+
+
+" default the statusline to green when entering Vim
+
+highlight InsertMode ctermbg=022
+highlight VisualMode ctermbg=005
+highlight NormalMode ctermbg=055
+highlight color1 ctermbg=088
+highlight color2 ctermbg=247
+highlight color2 ctermbg=244
+
+" Formats the statusline
+set laststatus=2
+set statusline=
+set statusline+=%#NormalMode#%{(mode()=='n')?'\ \ NORMAL\ ':''}
+set statusline+=%#InsertMode#%{(mode()=='i')?'\ \ INSERT\ ':''}
+set statusline+=%#DiffDelete#%{(mode()=='r')?'\ \ RPLACE\ ':''}
+set statusline+=%#VisualMode#%{(mode()=='v')?'\ \ VISUAL\ ':''}
+set statusline+=%#color1#
+set statusline+=\ %{g:gitbranch}\ 
+set statusline+=%#color2#
+set statusline+=\ %f                           " file name
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+
+set statusline+=\ %#color3#
+set statusline+=\ %=
+set statusline+=%y      "filetype
+set statusline+=\                  " current column
+set statusline+=%l:%c\ %p%%            " line X of Y [percent of file]
+
 runtime! debian.vim
+
 
 " Removes trailing spaces when saving
 function! <SID>StripTrailingWhitespaces()
@@ -28,14 +61,15 @@ function! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-:autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+:autocmd BufWritePre *java,*.c,*h,*py,*rb,*sh,*.v :call <SID>StripTrailingWhitespaces()
+" :autocmd BufWritePost .vimrc source %
 
 " Useful when git changes the file, reloads the file
 " when it was modified from outside vim
 set autoread
 
 " Indentation
-"filetype plugin indent on
+filetype plugin indent on
 syntax on " Syntax highlighting
 set number
 set mouse=a
@@ -56,7 +90,12 @@ set lazyredraw " for macros, better performance
 match OverLength /\%80v.*/
 " Source a global configuration file if available
 :nnoremap <F8> :setl noai nocin nosi inde=<CR>
+
+" Selection of word under cursor
 :nnoremap <C-X> viw
+
+:nnoremap <C-J> :tabp<CR>
+:nnoremap <C-K> :tabn<CR>
 
 set tabstop=4 " length of tab press
 set softtabstop=4 " length of tab suppr
@@ -67,8 +106,7 @@ set expandtab " change tabulations en espaces
 set background=dark
 set guifont=Menlo\ 14
 
-set statusline=\ >\ %-4F\ >\ %-4y\ %l/%L
-
+" Status line
 " Abbreviations
 iabbrev adn and
 " iabbrev #inc #include<>
@@ -76,7 +114,7 @@ iabbrev #! #!/bin/bash
 iabbrev direcotry directory
 iabbrev Sys System.out.println();
 
-autocmd VimEnter * echo "ZA WARUDO!"
+" autocmd VimEnter * echo "ZA WARUDO !"
 
 
 " :Git
