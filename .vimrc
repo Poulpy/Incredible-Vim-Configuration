@@ -9,15 +9,6 @@
 " wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " then run :PlugInstall in vim
 
-" Plugins
-call plug#begin('~/.vim/plugged')
-
-" Plug 'airblade/vim-gitgutter' " gutter for git
-" Plug 'ollykel/v-vim' " V color syntax
-" Plug 'ctrlpvim/ctrlp.vim' " file finder
-
-call plug#end()
-
 :autocmd BufEnter * let g:gitbranch=system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 
 
