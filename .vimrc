@@ -11,15 +11,17 @@
 
 :autocmd BufEnter * let g:gitbranch=system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 
+if !has('nvim')
+	set ttymouse=xterm2
+endif
 
 " default the statusline to green when entering Vim
 
-highlight InsertMode ctermbg=022
-highlight VisualMode ctermbg=005
-highlight NormalMode ctermbg=055
-highlight color1 ctermbg=088
-highlight color2 ctermbg=247
-highlight color2 ctermbg=244
+highlight InsertMode ctermbg=037
+highlight VisualMode ctermbg=176
+highlight NormalMode ctermbg=041
+highlight color1 ctermbg=068
+highlight color2 ctermbg=248
 
 " Formats the statusline
 set laststatus=2
@@ -63,6 +65,7 @@ set autoread
 filetype plugin indent on
 syntax on " Syntax highlighting
 set number
+set cursorline
 set mouse=a
 set showmatch " Show matching brackets.
 set smartcase " Do smart case matching
@@ -96,6 +99,7 @@ set expandtab " change tabulations en espaces
 " Apparence
 set background=dark
 set guifont=Menlo\ 14
+set novisualbell
 
 " Status line
 " Abbreviations
@@ -131,5 +135,3 @@ function! s:RunShellCommand(cmdline)
     setlocal nomodifiable
     1
 endfunction
-
-
